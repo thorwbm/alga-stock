@@ -1,61 +1,35 @@
 import React from 'react'
-import Products from './Table.mockdata'
+import organizeData from '../../Utils/organizeDataForTable'
 import './Table.scss'
 
-const Headers: TableHeader[] = [
-    {key: 'id', value: '#'},
-    {key: 'name', value: 'Product'},
-    {key: 'price', value: 'Price', right: true},
-    {key: 'stock', value: 'Avaliable Stock', right: true}
-]
 
-declare interface TableHeader {
+
+export interface TableHeader {
     key: string
     value: string
     right?: boolean    
 }
 
-type IndexedHeaders = {
-    [key: string] : TableHeader
+declare interface TableProps{
+    headers:TableHeader[]
+    data: any[]
+
+    enableActions?:boolean
+    onDelete?: (item : any) => void
+    onDetail?: (item : any) => void
+    onEdit?: (item : any) => void
 }
 
-type OrganizedItem = {
-    [key: string] : any
-}
 
-function organizeData(data: any[], Headers: TableHeader[]): 
- [OrganizedItem[], IndexedHeaders] {
-    const IndexedHeaders: IndexedHeaders = {}
 
-    Headers.forEach(header => {
-        IndexedHeaders[header.key] = {
-            ...header
-        }
-    })
+const Table: React.FC<TableProps> = (props) => {
 
-    const headerKeysInOorder = Object.keys(IndexedHeaders)
-
-    const organizedData = data.map(item => {
-        const organizedItem: OrganizedItem = {}
-
-        headerKeysInOorder.forEach(key => {
-            organizedItem[key] = item[key]
-        })
-
-        organizedItem.$original = item
-        return organizedItem
-    })
-
-    return [organizedData,IndexedHeaders]
-}
-const Table = () => {
-
-    const [organizedData, indexedHeaders] = organizeData(Products,Headers)
+    const [organizedData, indexedHeaders] = organizeData(props.data,props.headers)
 
     return  <table className="AppTable">
                 <thead>
                     <tr>
-                        {Headers.map(header =>  
+                        {props.headers.map(header =>  
                             <th  className={header.right ? 'right' : '' } key={header.key}>
                                 {header.value}
                             </th>
