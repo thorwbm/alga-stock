@@ -1,12 +1,10 @@
-import { POINT_CONVERSION_COMPRESSED } from 'constants'
 import React from 'react'
-import { isPropertySignature } from 'typescript'
 import './Button.css'
 
 declare interface ButtonProps{
     content?: string
     onClick?: () => void
-    appendIcon: JSX.Element
+    appendIcon?: JSX.Element
 }
 
 const Button: React.FC<ButtonProps> = (props) => {

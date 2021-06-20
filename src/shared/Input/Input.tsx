@@ -1,5 +1,4 @@
 import React from 'react'
-import { isPropertySignature } from 'typescript'
 import './Input.css'
 
 declare interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{
