@@ -5,7 +5,7 @@ import Container from '../../shared/Conteiner';
 import Table, { TableHeader } from '../../shared/Table';
 import Products from '../../shared/Table/Table.mockdata';
 import Header from '../Header';
-import ProductForm from '../Products/ProductForm';
+import ProductForm, { ProductCreator } from '../Products/ProductForm';
 import './App.css';
 
 
@@ -17,6 +17,10 @@ const headers: TableHeader[] = [
 ]
 
 function App() {
+  const handleProductSubmit = (product: ProductCreator) => {
+    console.log(product)
+  }
+
   return (
     <div className="App">
       <Header title="Alga Stock"/>
@@ -26,7 +30,7 @@ function App() {
           headers = {headers}
           data={Products}
         />
-        <ProductForm/>
+        <ProductForm onSubmit={handleProductSubmit}/>
       </Container>
     </div>
   );
