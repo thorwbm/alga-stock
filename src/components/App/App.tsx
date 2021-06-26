@@ -4,7 +4,7 @@ import './App.css';
 import Header from '../Header';
 import Container from '../../shared/Conteiner';
 import Table, { TableHeader } from '../../shared/Table';
-import Products from '../../shared/Table/Table.mockdata';
+import Products, { Product } from '../../shared/Table/Table.mockdata';
 import ProductForm, { ProductCreator } from '../Products/ProductForm';
 
 
@@ -28,8 +28,15 @@ function App() {
         ...product
       }
     ])
-  
   }
+    
+    const handleProductUpdate = (newProduct: Product) => {
+      setProducts(products.map(product => 
+        product.id === newProduct.id 
+          ? newProduct
+          : product 
+      ))
+    }
 
   return (
     <div className="App">
@@ -40,7 +47,10 @@ function App() {
           headers = {headers}
           data={products}
         />
-        <ProductForm onSubmit={handleProductSubmit}/>
+        <ProductForm 
+          form={products[0]}
+          onUpdate={handleProductUpdate}
+          onSubmit={handleProductSubmit}/>
       </Container>
     </div>
   );
