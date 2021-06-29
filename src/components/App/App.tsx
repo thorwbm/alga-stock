@@ -4,8 +4,8 @@ import './App.css';
 import Header from '../Header';
 import Container from '../../shared/Conteiner';
 import Table, { TableHeader } from '../../shared/Table';
-import Products, { Product } from '../../shared/Table/Table.mockdata';
 import ProductForm, { ProductCreator } from '../Products/ProductForm';
+import Products, { Product } from '../../shared/Table/Table.mockdata';
 
 
 

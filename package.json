@@ -27,8 +27,8 @@
       "react-app",
       "react-app/jest"
     ],
-    "rules":{
-      "react-hooks/exhaustive-deps":"off"
+    "rules": {
+      "react-hooks/exhaustive-deps": "off"
     }
   },
   "browserslist": {
@@ -44,6 +44,6 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^6.0.0"
+    "node-sass": "^6.0.1"
   }
 }
