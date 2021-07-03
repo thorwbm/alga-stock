@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Form from '../../shared/Form'
 import Input from '../../shared/Input'
 import Button from '../../shared/Button'
-import { Product } from '../../shared/Table/Table.mockdata'
+import Products, { Product } from '../../shared/Table/Table.mockdata'
 
 declare interface InitialFormState {
   id?: number
@@ -84,7 +84,7 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
     setForm(initialFormState)
   }
 
-  return <Form onSubmit={handleFormSubmit}>
+  return <Form title="Formulário de Produto" onSubmit={handleFormSubmit}>
     <Input
       onChange={handleInputChange}
       value={form.name}
@@ -115,7 +115,9 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
       required
     />
     <Button>
-      Submit
+      {
+        form.id ? 'Alterar' : 'Cadastrar'
+      }
     </Button>
   </Form>
 }
