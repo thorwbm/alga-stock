@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Form from '../../shared/Form'
 import Input from '../../shared/Input'
 import Button from '../../shared/Button'
-import Products, { Product } from '../../shared/Table/Table.mockdata'
+import { Product } from '../../shared/Table/Table.mockdata'
 
 declare interface InitialFormState {
   id?: number
