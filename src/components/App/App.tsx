@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'
 import './App.css';
 import Header from '../Header';
 import Container from '../../shared/Container';
 import Table, { TableHeader } from '../../shared/Table';
+import { Product } from '../../shared/Table/Table.mockdata';
 import ProductForm, { ProductCreator } from '../Products/ProductForm';
-import Products, { Product } from '../../shared/Table/Table.mockdata';
+import { getAllProducts } from '../../services/Products.service';
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -15,15 +16,23 @@ const headers: TableHeader[] = [
 ]
 
 function App() {
-  const [products, setProducts] = useState(Products)
-  const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(products[0])
+  const [products, setProducts] = useState<Product[]>([])
+  const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
 
+  useEffect(() => {
+    async function fetchData() {
+      const _products = await getAllProducts()
+      setProducts(_products)
+    }
+
+    fetchData()
+  }, [])
   
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
       ...products,
       {
-        id: products.length + 1,
+        _id: String (products.length + 1),
         ...product
       }
     ])
@@ -31,7 +40,7 @@ function App() {
 
   const handleProductUpdate = (newProduct: Product) => {
     setProducts(products.map(product =>
-      product.id === newProduct.id
+      product._id === newProduct._id
         ? newProduct
         : product
     ))
@@ -39,35 +48,37 @@ function App() {
     setUpdatingProduct(undefined)
   }
 
-  const productDelete = (id: number) => {
-    setProducts(products.filter(product => product.id !== id))
+  const deleteProduct = (id: string) => {
+    setProducts(products.filter(product => product._id !== id))
   }
+
   const handleProductDelete = (product: Product) => {
-    Swal.fire({
-      title: 'Você realmente deseja Deletar?',
-      text: "Esta ação não poderá ser revertida!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '##09f',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sim, pode deletar!',
-      cancelButtonText: 'Nãoooooo'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        productDelete(product.id)
-        Swal.fire(
-          'Deletado!',
-          'O registro foi deletado.',
-          'success'
-        )
-      }
-    })
+    Swal
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#09f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Yes, delete ${product.name}!`
+      })
+      .then((result) => {
+        if (result.value) {
+          deleteProduct(product._id)
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
   }
 
   const handleProductDetail = (product: Product) => {
     Swal.fire(
-      'Detalhe do Produto',
-      `${product.name} custa ${product.price}. Temos ${product.stock} em stock.`,
+      'Product details',
+      `${product.name} costs $${product.price} and we have ${product.stock} available in stock.`,
       'info'
     )
   }
