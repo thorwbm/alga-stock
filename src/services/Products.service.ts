@@ -1,5 +1,5 @@
 import http from '../utils/http'
-import { Product } from '../shared/Table/Table.mockdata'
+import { Product } from '../shared/Table/table.mockdata'
 
 export const getAllProducts = () =>
   http
