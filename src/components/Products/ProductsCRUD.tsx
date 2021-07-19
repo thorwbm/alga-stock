@@ -5,7 +5,7 @@ import {
   updateSingleProduct,
   deleteSingleProduct
 } from '../../services/Products.service'
-import { Product } from '../../shared/Table/table.mockdata'
+import { Product } from '../../shared/Table/Table.mockdata'
 import ProductForm, { ProductCreator } from './ProductForm'
 import Swal from 'sweetalert2'
 import { connect } from 'react-redux'
