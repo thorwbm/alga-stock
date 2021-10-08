@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import './App.css';
@@ -11,16 +10,14 @@ import { createSingleProduct,
          deleteSingleProduct, 
          getAllProducts, 
          updateSingleProduct } from '../../services/Products.service';
-=======
-import React from 'react';
-import './App.css';
-import Header from '../Header';
-import Container from '../../shared/Container';
-import ProductsCRUD from '../Products/ProductsCRUD';
->>>>>>> 5eeade030132a658920a6f512a144e5739685089
 
+const headers: TableHeader[] = [
+  { key: 'id', value: '#' },
+  { key: 'name', value: 'Product' },
+  { key: 'price', value: 'Price', right: true },
+  { key: 'stock', value: 'Available Stock', right: true }
+]
 
-<<<<<<< HEAD
 function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
@@ -94,17 +91,25 @@ function App() {
   const handleProductEdit = (product: Product) => {
     setUpdatingProduct(product)
   }
-=======
-
-function App() {
-  
->>>>>>> 5eeade030132a658920a6f512a144e5739685089
 
   return (
     <div className="App">
       <Header title="AlgaStock" />
       <Container>
-        <ProductsCRUD />
+        <Table
+          headers={headers}
+          data={products}
+          enableActions
+          onDelete={handleProductDelete}
+          onDetail={handleProductDetail}
+          onEdit={handleProductEdit}
+        />
+
+        <ProductForm
+          form={updatingProduct}
+          onSubmit={handleProductSubmit}
+          onUpdate={handleProductUpdate}
+        />
       </Container>
     </div>
   );

@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../shared/Button'
 
 import Form from '../../shared/Form'
 import Input from '../../shared/Input'
-<<<<<<< HEAD
 import Button from '../../shared/Button'
 import { Product } from '../../shared/Table/table.mockdata'
-=======
-import { Product } from '../../shared/Table/Table.mockdata'
->>>>>>> 5eeade030132a658920a6f512a144e5739685089
 
 declare interface InitialFormState {
   _id?: string
