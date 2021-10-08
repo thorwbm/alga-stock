@@ -34,4 +34,8 @@ const Products: Product[] = [
   }
 ]
 
+<<<<<<< HEAD
 export default Products
+=======
+export default Products
+>>>>>>> 5eeade030132a658920a6f512a144e5739685089
