@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Table, { TableHeader } from '../../shared/Table'
-import {
-  updateSingleProduct,
-  deleteSingleProduct,
-} from '../../services/Products.service'
 import { Product } from '../../shared/Table/table.mockdata'
 import ProductForm, { ProductCreator } from './ProductForm'
 import Swal from 'sweetalert2'
 import { connect, useDispatch } from 'react-redux'
-import {
-  getProducts,
-  insertNewProduct,
-} from '../../redux/Products/Products.actions'
+import * as ProductAction from '../../redux/Products/Products.actions'
+import { RootState } from '../../redux'
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -32,7 +26,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
   async function fetchData() {
     try {
-      dispatch(getProducts())
+      dispatch(ProductAction.getProducts())
     } catch (error) {
       Swal.fire('Ooops!', error.message, 'error')
     }
@@ -44,8 +38,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
   const handleProductSubmit = async (product: ProductCreator) => {
     try {
-      dispatch(insertNewProduct(product))
-      fetchData()
+      dispatch(ProductAction.insertNewProduct(product))
     } catch (problema) {
       Swal.fire('OOOpsss!', problema.message, 'error')
     }
@@ -53,8 +46,8 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
   const handleProductUpdate = async (newProduct: Product) => {
     try {
-      await updateSingleProduct(newProduct)
-      fetchData()
+      await dispatch(ProductAction.updateProduct(newProduct))
+      setUpdatingProduct(undefined)
     } catch (problema) {
       Swal.fire('OOOpsss!', problema.message, 'error')
     }
@@ -64,8 +57,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
   const deleteProduct = async (id: string) => {
     try {
-      await deleteSingleProduct(id)
-      fetchData()
+      await dispatch(ProductAction.deleteProduct(id))
       Swal.fire('UUhuuuuu!', 'Produto Deletado com Sucesso!', 'success')
     } catch (problema) {
       Swal.fire('OOOpsss!', problema.message, 'error')
@@ -120,7 +112,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
   products: state.products,
 })
 export default connect(mapStateToProps)(ProductsCRUD)
