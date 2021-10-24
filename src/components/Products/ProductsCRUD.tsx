@@ -8,7 +8,10 @@ import { Product } from '../../shared/Table/table.mockdata'
 import ProductForm, { ProductCreator } from './ProductForm'
 import Swal from 'sweetalert2'
 import { connect, useDispatch } from 'react-redux'
-import { insertNewProduct } from '../../redux/Products/Products.actions'
+import {
+  getProducts,
+  insertNewProduct,
+} from '../../redux/Products/Products.actions'
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -28,8 +31,11 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
   )
 
   async function fetchData() {
-    // const _products = await getAllProducts()
-    // setProducts(_products)
+    try {
+      dispatch(getProducts())
+    } catch (error) {
+      Swal.fire('Ooops!', error.message, 'error')
+    }
   }
 
   useEffect(() => {
@@ -40,8 +46,8 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     try {
       dispatch(insertNewProduct(product))
       fetchData()
-    } catch (error) {
-      Swal.fire('OOOpsss!', error.message, 'error')
+    } catch (problema) {
+      Swal.fire('OOOpsss!', problema.message, 'error')
     }
   }
 
@@ -61,8 +67,8 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
       await deleteSingleProduct(id)
       fetchData()
       Swal.fire('UUhuuuuu!', 'Produto Deletado com Sucesso!', 'success')
-    } catch (error) {
-      Swal.fire('OOOpsss!', error.message, 'error')
+    } catch (problema) {
+      Swal.fire('OOOpsss!', problema.message, 'error')
     }
   }
 
