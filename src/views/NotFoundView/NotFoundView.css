@@ -1,0 +1,23 @@
+.view404 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1 {
+  color: #09f;
+  font-weight: 900;
+  font-size: 30px !important;
+}
+
+.link-none {
+  color: #09f !important;
+
+  text-decoration: none !important;
+  font-size: small !important;
+
+  margin-top: 20px;
+}
