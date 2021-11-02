@@ -4,6 +4,7 @@ import Form from '../../shared/Form'
 import Input from '../../shared/Input'
 import Button from '../../shared/Button'
 import { Product } from '../../shared/Table/table.mockdata'
+import withPermission from '../../utils/HOC/withPermission'
 
 declare interface InitialFormState {
   _id?: string
@@ -35,7 +36,7 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
     : {
         name: '',
         price: '',
-        stock: ''
+        stock: '',
       }
 
   const [form, setForm] = useState(initialFormState)
@@ -49,7 +50,7 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
 
     setForm({
       ...form,
-      [name]: value
+      [name]: value,
     })
   }
 
@@ -58,68 +59,62 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
       _id: String(product._id),
       name: String(product.name),
       price: parseFloat(product.price),
-      stock: Number(product.stock)
+      stock: Number(product.stock),
     }
 
-    props.onUpdate &&
-      props.onUpdate(productDto)
+    props.onUpdate && props.onUpdate(productDto)
   }
 
   const createProduct = (product: InitialFormState) => {
     const productDto = {
       name: String(product.name),
       price: parseFloat(product.price),
-      stock: Number(product.stock)
+      stock: Number(product.stock),
     }
 
-    props.onSubmit &&
-      props.onSubmit(productDto)
+    props.onSubmit && props.onSubmit(productDto)
   }
 
   const handleFormSubmit = () => {
-    form._id
-      ? updateProduct(form)
-      : createProduct(form)
-    
+    form._id ? updateProduct(form) : createProduct(form)
+
     setForm(initialFormState)
   }
 
-  return <Form title="Product form" onSubmit={handleFormSubmit}>
-    <Input
-      onChange={handleInputChange}
-      value={form.name}
-      name="name"
-      label="Name"
-      placeholder="E.g.: Cookie"
-      required
-    />
-    <Input
-      onChange={handleInputChange}
-      value={form.price}
-      name="price"
-      label="Price"
-      type="number"
-      step="0.01"
-      min="0"
-      placeholder="E.g.: 1.25"
-      required
-    />
-    <Input
-      onChange={handleInputChange}
-      value={form.stock}
-      name="stock"
-      label="Stock"
-      type="number"
-      min="0"
-      placeholder="E.g.: 15"
-      required
-    />
-    <Button>
-      {
-        form._id ? 'Update' : 'Submit'
-      }
-    </Button>
-  </Form>
+  return (
+    <Form title="Product form" onSubmit={handleFormSubmit}>
+      <Input
+        onChange={handleInputChange}
+        value={form.name}
+        name="name"
+        label="Name"
+        placeholder="E.g.: Cookie"
+        required
+      />
+      <Input
+        onChange={handleInputChange}
+        value={form.price}
+        name="price"
+        label="Price"
+        type="number"
+        step="0.01"
+        min="0"
+        placeholder="E.g.: 1.25"
+        required
+      />
+      <Input
+        onChange={handleInputChange}
+        value={form.stock}
+        name="stock"
+        label="Stock"
+        type="number"
+        min="0"
+        placeholder="E.g.: 15"
+        required
+      />
+      <Button>{form._id ? 'Update' : 'Submit'}</Button>
+    </Form>
+  )
 }
 
-export default ProductForm
+export default withPermission(['customer'])(ProductForm)
