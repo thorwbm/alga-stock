@@ -24,14 +24,18 @@ export interface Action< T = any>{
     payload?: T
 }
 
+
+const enhancers = [
+    applyMiddleware(thunk),
+    //@ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+].filter(e => e)
+
 const store = createStore(
     pesistedReducer,
-    compose(
-        applyMiddleware(thunk),
-        //@ts-ignore
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-        )
-        
+    compose(...enhancers  )
+)        
+
 const persistor = persistStore(store)
 export interface Action<T = any> {
     type: string
