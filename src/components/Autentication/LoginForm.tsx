@@ -5,6 +5,7 @@ import { login } from '../../redux/Authentication/Authentication.actions'
 import Button from '../../shared/Button'
 import Form from '../../shared/Form'
 import Input from '../../shared/Input'
+import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -23,9 +24,12 @@ const LoginForm = () => {
     })
   }
 
+  const history = useHistory()
+
   const handleLogin = async () => {
     try {
       await dispatch(login(form))
+      history.push('/')
     } catch (err) {
       Swal.fire(
         'Erro ao logar',
