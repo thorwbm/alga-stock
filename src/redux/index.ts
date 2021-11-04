@@ -28,7 +28,7 @@ export interface Action< T = any>{
 const enhancers = [
     applyMiddleware(thunk),
     //@ts-ignore
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ].filter(e => e)
 
 const store = createStore(
